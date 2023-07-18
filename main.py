@@ -4,6 +4,7 @@ import random
 
 bot = Bot(token=config.API_TOKEN)
 dp = Dispatcher(bot)
+count = 0
 
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
@@ -17,10 +18,19 @@ async def start_command(message: types.Message):
 async def start_command(message: types.Message):
     await message.answer(config.HELP_INFO)
 
+@dp.message_handler(commands=['count'])
+async def start_command(message: types.Message):
+    global count
+    await message.answer(count)
+    count += 1
+
 @dp.message_handler()
 async def start_command(message: types.Message):
-    mess = random.choice(config.ALPHOBET)
-    await message.answer(mess)
+    mess = message.text
+    if '0' in mess:
+        await message.answer('YES')
+    else:
+        await message.answer('NO')
     
 def main():
     executor.start_polling(dp)
