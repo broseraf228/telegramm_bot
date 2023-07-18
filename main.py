@@ -1,6 +1,6 @@
 from aiogram import Bot, Dispatcher, executor, types
 import config
-
+import random
 
 bot = Bot(token=config.API_TOKEN)
 dp = Dispatcher(bot)
@@ -19,9 +19,8 @@ async def start_command(message: types.Message):
 
 @dp.message_handler()
 async def start_command(message: types.Message):
-    mess = message.text
-    if len(mess.split()) < 3:
-        await message.answer(mess.upper())
+    mess = random.choice(config.ALPHOBET)
+    await message.answer(mess)
     
 def main():
     executor.start_polling(dp)
